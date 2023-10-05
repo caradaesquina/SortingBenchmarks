@@ -169,6 +169,13 @@ int main(void){
     std::ifstream aurelio;
     aurelio.open("arquivos/aurelio40000.txt");
 
+    std::ofstream output;
+    output.open("arquivos/output.txt", std::ofstream::out | std::ofstream::trunc ); //TODO: deleta os contudos do ultimo teste
+    if (output.is_open()){
+      std::cout << "Output funcionando." << std::endl;
+    }
+
+
     //inicialização dos vetores
      string vet1k[1000], vet5k[5000], vet10k[10000]
       ,vet20k[20000], vet30k[30000], vet40k[40000];
@@ -181,6 +188,7 @@ int main(void){
 
     //sorts com bubbleSort
     std::cout << "====BUBBLE SORT 1k====" << std::endl;
+    output << "====BUBLE SORT 1k====\n";
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -192,9 +200,11 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
     }
 
     std::cout << "====BUBBLE SORT 5k====" << std::endl;
+    output << "====BUBBLE SORT 5k====\n";
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -204,8 +214,10 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
     }
     std::cout << "====BUBBLE SORT 10k====" << std::endl;
+    output << "====BUBBLE SORT 10k====\n";
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -215,9 +227,11 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if (i>0) output << duration.count() << "\n";
     }
 
     std::cout << "====BUBBLE SORT 20k====" << std::endl;
+    output<<"====BUBBLE SORT 20k =====\n"; 
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -227,9 +241,11 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
     }
 
     std::cout << "====BUBBLE SORT 30k====" << std::endl;
+    output<<"====BUBBLE SORT 30k =====\n";
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -239,9 +255,11 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
     }
 
     std::cout << "====BUBBLE SORT 40k====" << std::endl;
+    output << "====BUBBLE SORT 40k====\n";
     for (int i = 0; i <= 10; i++){
       std::cout << "Benchmark " << i << ": ";
 
@@ -251,15 +269,441 @@ int main(void){
 
       auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
       std::cout << duration.count() << " microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
     }
-    //bubbleSort(vet, TAM);
-    //selectionSort(vet, TAM);
-    //insertionSort(vet,TAM);
-    //shellSort(vet,TAM);// -- ta bichado
-    //mergeSort(vet,TAM);
-    //quickSort(vet,0,TAM-1);
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector (vet40k, aurelio, 40000);
+
+    //selectionSort
+    std::cout << "====SELECTION SORT 1k====" << std::endl;
+    output << "====SELECTION SORT 1k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet1k, 1000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SELECTION SORT 5k====" << std::endl;
+    output << "====SELECTION SORT 5k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet5k, 5000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SELECTION SORT 10k====" << std::endl;
+    output << "====SELECTION SORT 10k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet10k, 10000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SELECTION SORT 20k====" << std::endl;
+    output << "====SELECTION SORT 20k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet20k, 20000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SELECTION SORT 30k====" << std::endl;
+    output << "SELECTION SORT 30k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet30k, 30000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SELECTION SORT 40k====" << std::endl;
+    output << "====SELECTION SORT 40k====\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      selectionSort(vet40k, 40000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector (vet40k, aurelio, 40000);
+
+    //insertionSort
+    std::cout << "====INSERTION SORT 1k====" << std::endl;
+    output << "====INSERTION SORT 1k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet1k, 1000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====INSERTION SORT 5k====" << std::endl;
+    output << "====INSERTION SORT 5k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet5k, 5000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====INSERTION SORT 10k====" << std::endl;
+    output << "====INSERTION SORT 10k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet10k, 10000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====INSERTION SORT 20k====" << std::endl;
+    output << "====INSERTION SORT 20k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet20k, 20000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====INSERTION SORT 30k====" << std::endl;
+    output << "====INSERTION SORT 30k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet30k, 30000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====INSERTION SORT 40k====" << std::endl;
+    output << "====INSERTION SORT 40k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      insertionSort(vet40k, 40000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector (vet40k, aurelio, 40000);
+
+    //shellSort
+    std::cout << "====SHELL SORT 1k====" << std::endl;
+    output << "====SHELL SORT 1k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet1k, 1000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SHELL SORT 5k====" << std::endl;
+    output << "====SHELL SORT 5k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet5k, 5000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SHELL SORT 10k====" << std::endl;
+    output << "====SHELL SORT 10k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet10k, 10000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SHELL SORT 20k====" << std::endl;
+    output << "====SHELL SORT 20k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet20k, 20000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SHELL SORT 30k====" << std::endl;
+    output << "====SHELL SORT 30k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet30k, 30000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====SHELL SORT 40k====" << std::endl;
+    output << "====SHELL SORT 40k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      shellSort(vet40k, 40000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector (vet40k, aurelio, 40000);
+
+    //mergeSort
+    std::cout << "====MERGE SORT 1k====" << std::endl;
+    output << "====MERGE SORT 1k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet1k, 1000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====MERGE SORT 5k====" << std::endl;
+    output << "====MERGE SORT 5k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet5k, 5000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====MERGE SORT 10k====" << std::endl;
+    output << "====MERGE SORT 10k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet10k, 10000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====MERGE SORT 20k====" << std::endl;
+    output << "====MERGE SORT 20k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet20k, 20000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====MERGE SORT 30k====" << std::endl;
+    output << "====MERGE SORT 30k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet30k, 30000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====MERGE SORT 40k====" << std::endl;
+    output << "====MERGE SORT 40k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      mergeSort(vet40k, 40000);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector (vet40k, aurelio, 40000);
+
+    //quickSort
+    std::cout << "====QUICK SORT 1k====" << std::endl;
+    output << "====QUICK SORT 1k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet1k,0, 1000-1);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====QUICK SORT 5k====" << std::endl;
+    output << "====QUICK SORT 5k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet5k,0, 5000-1);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
     
+    std::cout << "====QUICK SORT 10k====" << std::endl;
+    output << "====QUICK SORT 10k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
 
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet10k,0, 10000-1);
+      auto end = std::chrono::high_resolution_clock::now();
 
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====QUICK SORT 20k====" << std::endl;
+    output << "====QUICK SORT 20k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet20k,0, 20000-1);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====QUICK SORT 30k====" << std::endl;
+    output << "====QUICK SORT 30k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet30k,0, 30000-1);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+    std::cout << "====QUICK SORT 40k====" << std::endl;
+    output << "====QUICK SORT 40k\n";
+    for (int i = 0; i<= 10; i++){
+      std::cout << "Benchmark " << i << ": ";
+
+      auto begin = std::chrono::high_resolution_clock::now();
+      quickSort(vet40k,0, 40000-1);
+      auto end = std::chrono::high_resolution_clock::now();
+
+      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
+      std::cout << duration.count() << "microseconds" << std::endl;
+      if(i > 0) output << duration.count() << "\n";
+    }
+
+    aurelio.close();
+    output.close();
     return 0;
 }
