@@ -10,6 +10,7 @@
 
 
 #include<string>
+#include <vector>
 #include<ctime>
 #include<iostream>
 #include <fstream>
@@ -19,20 +20,23 @@
 #define TAM 10
 
 
-void initializeVector(std::string *vec, std::ifstream& file ,int tam){
+void initializeVector(std::vector<std::string>& vec, std::ifstream& file , int tam){
   int i = 0;
+  file.clear();
+  file.seekg (0, std::ios::beg);
   if(file.is_open()){
     while((i < tam) && (file.good())){
-      std::getline(file, vec[i]);
-      //file >> vec[i];
+      std::string line;
+      std::getline(file, line);
+      vec.push_back(line);
       i++;
     }
   }
 }
 
-void imprime(std::string *vet, int tam){
-    for(int i = 0; i<tam;i++){
-      std::cout << vet[i] << ", ";
+void imprime(std::vector<std::string> vec){
+    for(int i = 0; i<vec.size();i++){
+      std::cout << vec[i] << ", ";
     }
 }
 
@@ -50,27 +54,52 @@ int main(void){
 
 
     //inicialização dos vetores
-    std::string vet1k[1000], vet5k[5000], vet10k[10000]
-      ,vet20k[20000], vet30k[30000], vet40k[40000];
+    std::vector<std::string> vet1k, vet5k, vet10k, vet20k, vet30k, vet40k;
+    initializeVector(vet1k, aurelio, 1000);
+    initializeVector(vet5k, aurelio, 5000);
+    initializeVector(vet10k, aurelio, 10000);
+    initializeVector(vet20k, aurelio, 20000);
+    initializeVector(vet30k, aurelio, 30000);
+    initializeVector(vet40k, aurelio, 40000);
+    std::cout << "Vetores inicializados com valores." << std::endl;
+    std::vector<std::vector<std::string>> wordVectors= {vet1k, vet5k, vet10k, vet20k, vet30k, vet40k};
+    std::cout << "Vetor de vetores inicializado." << std::endl;
+ 
+    //0-5: bubble, seletion, insert, shell, merge, quick    
+    typedef void (*SortFunction) (std::vector<std::string>&, int);
+    SortFunction* sortingFunctions = getSortingFunctions(); 
+    std::string* functionNames = getFunctionNames();
 
-    //sorts com bubbleSort
-    std::cout << "====BUBBLE SORT 1k====" << std::endl;
-    output << "====BUBLE SORT 1k====\n";
-    for (int i = 0; i <= 10; i++){
-      initializeVector(vet1k, aurelio, 1000);
-      std::cout << "Benchmark " << i << ": ";
 
-      //recolhe 2 timestamps: um antes e um após o retorno da funcao, 
-      //a duracao da funcao eh a diferenca dos 2
-      auto begin = std::chrono::high_resolution_clock::now();
-      bubbleSort(vet1k, 1000);
-      auto end  = std::chrono::high_resolution_clock::now();
+    //loop que itera sobre as 6 funcoes de ordenacao(i);
+    //em cada um dos 6 tamanhos de vetor (j);
+    //fazendo 10 rodadas e tirando as medias do benchmark (k)
+    for(int i = 0; i < 6; i++){
+      for (int j = 0; j < 6; j++){
+        std::cout << "=====" <<  functionNames[i] << " " << wordVectors[j].size() << "====="<< std::endl;
+        output <<  "=====" <<  functionNames[i] << " " << wordVectors[j].size() << "=====" << "\n";
 
-      auto duration = std::chrono::duration_cast<std::chrono::microseconds> (end - begin);
-      std::cout << duration.count() << " microseconds" << std::endl;
-      if(i > 0) output << duration.count() << "\n";
+        int avg = 0;
+        for (int k = 0; k < 10; k++){
+          std::vector<std::string> vec = wordVectors[j];
+
+          std::cout << "Benchmark " << k << ": ";
+          output << "Benchmark " << k << ": ";
+
+          auto start = std::chrono::high_resolution_clock::now();
+          sortingFunctions[i](vec, wordVectors[j].size());
+          auto end = std::chrono::high_resolution_clock::now();
+
+          auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+          std::cout << duration.count() << " microseconds" << std::endl;
+          output << duration.count() << "\n";
+          avg += duration.count();
+        }
+        avg /= 10;
+        std::cout << "Media: " << avg << " microsegundos" << std::endl;
+        output << "Media: " << avg;
+      }
     }
-    for (int i = 0; i < 6; i++)
 
 
     aurelio.close();
